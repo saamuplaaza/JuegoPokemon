@@ -1,76 +1,55 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="styles.css">
-        <title>Pokémon's Video Game</title>
-    </head>
-    <body>
-        <img class="titulo" src="./images/International_Pokémon_logo.svg.png" alt="Título de Pokémon">
-        <div class="players">
-            <div class="player">
-                <h2>Jugador 1</h2>
-                <div class="images">
-                    <div id="P1-0" class="P-pokemons">
-                        <img id="imgP1-0" alt="foto de un Pokémon">
-                        <p id="vidaP1 0"></p>
-                    </div>
-                    <div id="P1-1" class="P-pokemons">
-                        <img id="imgP1-1" alt="foto de un Pokémon">
-                        <p id="vidaP1 1"></p>
-                    </div>
-                    <div id="P1-2" class="P-pokemons">
-                        <img id="imgP1-2" alt="foto de un Pokémon">
-                        <p id="vidaP1 2"></p>
-                    </div>
-                </div>
-            </div>
-            <div class="player">
-                <h2>Jugador 2</h2>
-                <div class="images">
-                    <div id="P2-0" class="P-pokemons">
-                        <img id="imgP2-0" alt="foto de un Pokémon">
-                        <p id="vidaP2 0"></p>
-                    </div>
-                    <div id="P2-1" class="P-pokemons">
-                        <img id="imgP2-1" alt="foto de un Pokémon">
-                        <p id="vidaP2 1"></p>
-                    </div>
-                    <div id="P2-2" class="P-pokemons">
-                        <img id="imgP2-2" alt="foto de un Pokémon">
-                        <p id="vidaP2 2"></p>
-                    </div>
-                </div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Pokémon's Video Game</title>
+</head>
+
+<body>
+    <img class="titulo" src="./images/International_Pokémon_logo.svg.png" alt="Título de Pokémon">
+    <div class="players">
+        <div class="player">
+            <h2>Jugador 1</h2>
+            <div class="images" id="imagesP1">
             </div>
         </div>
-        <div class="batalla">
-            <div class="eleccion-batalla">
-                <p id="nombrePok1Batalla" class="oculto"></p>
-                <p><img id="imgP1" class="imgBatalla" src=""><span id="span1" class="">Elige un Pokémon</span></p>
-                <div>
-                    <p id="vidaPok1Batalla" class="oculto">Vida: </p>
-                    <p id="tipoPok1Batalla" class="oculto">Tipo: </p>
-                    <p id="fuerzaPok1Batalla" class="oculto">Fuerza: </p>
-                </div>
+        <div class="player">
+            <h2>Jugador 2</h2>
+            <div class="images" id="imagesP2">
             </div>
+        </div>
+    </div>
+    <div class="batalla">
+        <div class="eleccion-batalla">
+            <p id="nombrePok1Batalla" class="oculto"></p>
+            <p><img id="imgP1" class="imgBatalla" src=""><span id="span1" class="">Elige un Pokémon</span></p>
             <div>
-                <p id="eventos-batalla"></p>
-                <div class="botones-batalla">
-                    <button type="button" onclick="ataque()" class="boton-luchar" disabled>Luchar</button>
-                    <button type="button" onclick="reiniciar()">Reiniciar</button>
-                </div>
-            </div>
-            <div class="eleccion-batalla">
-                <p id="nombrePok2Batalla" class="oculto"></p>
-                <p><img id="imgP2" class="imgBatalla" src=""><span id="span2" class="">Elige un Pokémon</span></p>
-                <div>
-                    <p id="vidaPok2Batalla" class="oculto">Vida: </p>
-                    <p id="tipoPok2Batalla" class="oculto">Tipo: </p>
-                    <p id="fuerzaPok2Batalla" class="oculto">Fuerza: </p>
-                </div>
+                <p id="vidaPok1Batalla" class="oculto">Vida: </p>
+                <p id="tipoPok1Batalla" class="oculto">Tipo: </p>
+                <p id="fuerzaPok1Batalla" class="oculto">Fuerza: </p>
             </div>
         </div>
-    </body>
-    </html>
-    <script src="pokemon.js"></script>
+        <div>
+            <p id="eventos-batalla"></p>
+            <div class="botones-batalla">
+                <button type="button" class="boton-luchar" disabled>Luchar</button>
+                <button type="button" onclick="reiniciar()" class="boton-reiniciar">Reiniciar</button>
+            </div>
+        </div>
+        <div class="eleccion-batalla">
+            <p id="nombrePok2Batalla" class="oculto"></p>
+            <p><img id="imgP2" class="imgBatalla" src=""><span id="span2" class="">Elige un Pokémon</span></p>
+            <div>
+                <p id="vidaPok2Batalla" class="oculto">Vida: </p>
+                <p id="tipoPok2Batalla" class="oculto">Tipo: </p>
+                <p id="fuerzaPok2Batalla" class="oculto">Fuerza: </p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="pokemon.js"></script>
