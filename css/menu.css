@@ -1,0 +1,29 @@
+html{
+    height: 100%;
+}
+
+body{
+    height: 100%;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.play{
+    background-color: red;
+    color: white;
+    border: none;
+    font-size: 30px;
+    padding: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border-radius: 10px;
+}
+
+.play:hover{
+    transform: scale(1.05);
+}
+
+.play:active{
+    transform: scale(1);
+}

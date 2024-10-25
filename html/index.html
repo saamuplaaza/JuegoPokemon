@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/index.css">
+    <title>Login Pokémon</title>
+</head>
+
+<body>
+    <form method="post">
+        <label for="usuario">Usuario: </label>
+        <input type="text" name="usuario" id="usuario">
+        <label for="clave">Contraseña: </label>
+        <input type="password" name="clave" id="clave">
+
+        <button type="submit" id="enviar">Iniciar Sesión</button>
+    </form>
+    <p id="error-message" style="color: red;"></p>
+    <p>¿No tienes cuenta? <a href="">Regístrate</a></p>
+    <script src="../js/index.js"></script>
+</body>
+
+</html>

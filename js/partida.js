@@ -6,6 +6,8 @@ const options = {
 		'User-Agent': 'insomnia/10.1.0',
 		apikey:
 			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+		Authorization:
+			'Beared eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
 	},
 }
 fetch(
@@ -14,6 +16,7 @@ fetch(
 )
 	.then(response => response.json())
 	.then(data => {
+		console.log(data)
 		const datos = visualizar(data)
 		console.log(datos)
 		const botonLucha = document.querySelector('.boton-luchar')
@@ -22,10 +25,10 @@ fetch(
 	.catch(err => console.error(err))
 
 function visualizar(data) {
-	const pokemonsP1 = data.filter(e => e.UserId === 1)
+	const pokemonsP1 = data.filter(e => e.player === 'player1')
 	let copiaP1 = pokemonsP1.map(e => ({ ...e, vidaActual: e.vida }))
 
-	const pokemonsP2 = data.filter(e => e.UserId === 2)
+	const pokemonsP2 = data.filter(e => e.player === 'player2')
 	let copiaP2 = pokemonsP2.map(e => ({ ...e, vidaActual: e.vida }))
 
 	copiaP1.forEach(e => {
@@ -160,6 +163,7 @@ function ataque(datos) {
 				ganador.className = 'ganador'
 				ganador.innerHTML = '¡Player 1 win!'
 				document.body.append(ganador)
+				actualizarVida(datos.copiaP1)
 			}
 		}
 
@@ -220,6 +224,37 @@ function ataque(datos) {
 
 	console.log('Turno:', turno)
 	turno++
+}
+
+const actualizarVida = datos => {
+	datos.forEach(e => {
+		console.log(e.vida)
+
+		const vidaActualizada = e.vida * 1.1
+
+		const options = {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json',
+				'User-Agent': 'insomnia/10.1.0',
+				apikey:
+					'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+				Prefer: 'return=minimal',
+			},
+			body: JSON.stringify({ vida: vidaActualizada }),
+		}
+
+		fetch(
+			`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?id=eq.${e.id}`,
+			options,
+		)
+	})
+}
+
+const reiniciar = () => {
+	// const eventos = document.getElementById('eventos-batalla')
+	// eventos.innerText = ''
+	location.reload()
 }
 
 // function ataque(datos) {
@@ -288,9 +323,3 @@ function ataque(datos) {
 // 	turno++
 // 	console.log('Turno:', turno)
 // }
-
-const reiniciar = () => {
-	// const eventos = document.getElementById('eventos-batalla')
-	// eventos.innerText = ''
-	location.reload()
-}
