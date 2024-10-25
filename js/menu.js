@@ -59,7 +59,7 @@ boton.addEventListener('click', () => {
 				).catch(err => console.error(err))
 			}
 		})
-		// .then((window.location.href = '../html/partida.html'))
+		// .then((window.location.href = '../partida.html'))
 		.catch(err => console.error(err))
 
 	// } catch {

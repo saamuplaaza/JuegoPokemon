@@ -32,7 +32,7 @@ formulario.addEventListener('submit', event => {
 				sessionStorage.setItem('access_token', data.access_token)
 				sessionStorage.setItem('refresh_token', data.refresh_token)
 				sessionStorage.setItem('user_id', data.user.id)
-				window.location.href = '../html/menu.html'
+				window.location.href = '../menu.html'
 			} else {
 				errorMessage.innerHTML = 'Usuario o contraseña incorrectos.'
 			}
