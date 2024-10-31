@@ -1,0 +1,69 @@
+h1 {
+    text-align: center;
+}
+
+.pokemons{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.pokemon{
+    position: relative;
+    background-color: rgba(190, 2, 2, 0.37);
+    margin: 10px;
+    border-radius: 20px;
+    box-shadow: 3px 3px 10px rgb(56, 0, 0);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.pokemon h3{
+    text-align: center;
+}
+
+.pokemon img{
+    width: 80%;
+}
+
+.pokemon p{
+    margin: 0px 0px 3px 3px;
+}
+
+/* .confirmar{
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.219);
+    border-radius: 20px;
+}
+
+.seleccionado{
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.219);
+    border-radius: 20px;
+} */
+
+.confirmar, .seleccionado {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.seleccionado {
+    background-color: rgba(0, 128, 0, 0.7); /* Verde semitransparente */
+}

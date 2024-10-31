@@ -1,4 +1,6 @@
 const boton = document.querySelector('.play')
+const token = sessionStorage.getItem('access_token')
+// const apikey =
 
 boton.addEventListener('click', () => {
 	// Si el select da algo, hacer el update, sino, hacer insert
@@ -8,8 +10,7 @@ boton.addEventListener('click', () => {
 			'User-Agent': 'insomnia/10.1.0',
 			apikey:
 				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
-			Authorization:
-				'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+			Authorization: `Bearer ${token}`,
 			Range: '0-0',
 		},
 	}
@@ -20,25 +21,10 @@ boton.addEventListener('click', () => {
 	)
 		.then(response => response.json())
 		.then(data => {
-			console.log(data)
-			if (data.length === 1) {
-				const options2 = {
-					method: 'PATCH',
-					headers: {
-						'Content-Type': 'application/json',
-						'User-Agent': 'insomnia/10.1.0',
-						apikey:
-							'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
-						Prefer: 'return=minimal',
-					},
-					body: JSON.stringify({ player2: sessionStorage.getItem('user_id') }),
-				}
+			let newUser = false
 
-				fetch(
-					`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?id=eq.${data[0].id}`,
-					options2,
-				).catch(err => console.log(err))
-			} else {
+			if (data.length === 0) {
+				newUser = true
 				const options3 = {
 					method: 'POST',
 					headers: {
@@ -46,22 +32,80 @@ boton.addEventListener('click', () => {
 						'User-Agent': 'insomnia/10.1.1',
 						apikey:
 							'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
-						Authorization:
-							'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+						Authorization: `Bearer ${token}`,
 						Prefer: 'return=minimal',
 					},
-					body: `{"player1":"${sessionStorage.getItem('user_id')}"}`,
+					body: `{"player1":"${sessionStorage.getItem('user_id')}", "player2": null}`,
 				}
 
 				fetch(
 					'https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match',
 					options3,
-				).catch(err => console.error(err))
+				)
+					.then(setInterval(() => pasarPartida(newUser), 5000))
+					.catch(err => console.error(err))
+			} else {
+				const options2 = {
+					method: 'PATCH',
+					headers: {
+						'Content-Type': 'application/json',
+						'User-Agent': 'insomnia/10.1.0',
+						apikey:
+							'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+						Authorization: `Bearer ${token}`,
+						Prefer: 'return=minimal',
+					},
+					body: `{"player2":"${sessionStorage.getItem('user_id')}", "estado": "ready"}`,
+				}
+
+				fetch(
+					`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?id=eq.${data[0].id}`,
+					options2,
+				)
+					// .then(response => response.json)
+					.then(setInterval(() => pasarPartida(newUser), 5000))
+					// .then((window.location.href = './pokemons.html'))
+					.catch(err => console.log(err))
 			}
 		})
 		// .then((window.location.href = '../partida.html'))
 		.catch(err => console.error(err))
-
-	// } catch {
-	// }
 })
+
+const pasarPartida = newUser => {
+	const options = {
+		method: 'GET',
+		headers: {
+			'User-Agent': 'insomnia/10.1.1',
+			apikey:
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+			Authorization: `Bearer ${token}`,
+		},
+	}
+	if (newUser) {
+		fetch(
+			`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?player1=eq.${sessionStorage.getItem('user_id')}&select=estado`,
+			options,
+		)
+			.then(response => response.json())
+			.then(data =>
+				data[0].estado === 'ready'
+					? (window.location.href = './pokemons.html')
+					: '',
+			)
+			.catch(err => console.error(err))
+	} else {
+		console.log('entra')
+		fetch(
+			`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?player2=eq.${sessionStorage.getItem('user_id')}&select=estado`,
+			options,
+		)
+			.then(response => response.json())
+			.then(data =>
+				data[0].estado === 'ready'
+					? (window.location.href = './pokemons.html')
+					: '',
+			)
+			.catch(err => console.error(err))
+	}
+}
