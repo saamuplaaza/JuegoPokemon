@@ -21,10 +21,10 @@ boton.addEventListener('click', () => {
 	)
 		.then(response => response.json())
 		.then(data => {
-			let newUser = false
+			let newRow = false
 
 			if (data.length === 0) {
-				newUser = true
+				newRow = true
 				const options3 = {
 					method: 'POST',
 					headers: {
@@ -42,7 +42,7 @@ boton.addEventListener('click', () => {
 					'https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match',
 					options3,
 				)
-					.then(setInterval(() => pasarPartida(newUser), 5000))
+					.then(setInterval(() => pasarPartida(newRow), 5000))
 					.catch(err => console.error(err))
 			} else {
 				const options2 = {
@@ -63,7 +63,7 @@ boton.addEventListener('click', () => {
 					options2,
 				)
 					// .then(response => response.json)
-					.then(setInterval(() => pasarPartida(newUser), 5000))
+					.then(setInterval(() => pasarPartida(newRow), 5000))
 					// .then((window.location.href = './pokemons.html'))
 					.catch(err => console.log(err))
 			}
@@ -72,7 +72,7 @@ boton.addEventListener('click', () => {
 		.catch(err => console.error(err))
 })
 
-const pasarPartida = newUser => {
+const pasarPartida = newRow => {
 	const options = {
 		method: 'GET',
 		headers: {
@@ -82,7 +82,7 @@ const pasarPartida = newUser => {
 			Authorization: `Bearer ${token}`,
 		},
 	}
-	if (newUser) {
+	if (newRow) {
 		fetch(
 			`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?player1=eq.${sessionStorage.getItem('user_id')}&select=estado`,
 			options,

@@ -94,9 +94,11 @@ fetch(
 											`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?player2=eq.${user_id}`,
 											options2,
 										)
-											.then(response => response.json())
 											.then(data => {
 												console.log(data)
+												setInterval(() => {
+													pasarPartida()
+												}, 3000)
 											})
 											.catch(err => console.log(err))
 									} else {
@@ -117,9 +119,12 @@ fetch(
 											`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?player1=eq.${user_id}`,
 											options2,
 										)
-											.then(response => response.json())
 											.then(data => {
 												console.log(data)
+												console.log('Aqui')
+												setInterval(() => {
+													pasarPartida()
+												}, 3000)
 											})
 											.catch(err => console.log(err))
 									}
@@ -140,3 +145,28 @@ fetch(
 		})
 	})
 	.catch(err => console.error(err))
+
+const pasarPartida = () => {
+	const options = {
+		method: 'GET',
+		headers: {
+			'User-Agent': 'insomnia/10.1.1',
+			apikey:
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+			Authorization: `Bearer ${token}`,
+		},
+	}
+	fetch(
+		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?&select=poks1%2Cpoks2`,
+		options,
+	)
+		.then(response => response.json())
+		.then(data => {
+			console.log(data)
+			console.log(data[0])
+			data[0].poks1 !== null && data[0].poks2 !== null
+				? (window.location.href = './partida.html')
+				: ''
+		})
+		.catch(err => console.error(err))
+}
