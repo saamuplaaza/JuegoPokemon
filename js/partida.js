@@ -19,9 +19,7 @@ fetch(
 )
 	.then(response => response.json())
 	.then(data => {
-		console.log(data)
 		const datos = visualizar(data)
-		console.log(datos)
 		const botonLucha = document.querySelector('.boton-luchar')
 		botonLucha.addEventListener('click', () => ataque(datos))
 	})
@@ -49,7 +47,6 @@ function visualizar(data) {
 	)
 		.then(response => response.json())
 		.then(data2 => {
-			console.log(data2)
 			P1 = data2[0].poks1[0]
 			P2 = data2[0].poks2[0]
 			pok1_1 = data2[0].poks1[1]
@@ -69,8 +66,6 @@ function visualizar(data) {
 			)
 			let copiaP2 = pokemonsP2.map(e => ({ ...e, vidaActual: e.vida }))
 
-			console.log(P1)
-			console.log(user_id)
 			if (P1 === user_id) {
 				visualizarP1(copiaP1)
 				visualizarP2(copiaP2)
@@ -117,26 +112,12 @@ function visualizar(data) {
 							document.querySelector('#imgP1').classList.add('muerto')
 						}
 
-						const elegir = document.getElementById('span1')
-						elegir.classList.add('oculto')
-						const imgPok1Batalla = document.getElementById(`imgP1`)
-						imgPok1Batalla.setAttribute('src', e.img)
-						const nombrePok1Batalla =
-							document.getElementById('nombrePok1Batalla')
-						nombrePok1Batalla.classList.remove('oculto')
-						nombrePok1Batalla.innerText = e.nombre
-						const vidaPok1Batalla = document.getElementById('vidaPok1Batalla')
-						vidaPok1Batalla.classList.remove('oculto')
-						vidaPok1Batalla.innerText = `Vida: ${e.vidaActual}`
-
-						const tipoPok1Batalla = document.getElementById('tipoPok1Batalla')
-						tipoPok1Batalla.classList.remove('oculto')
-						tipoPok1Batalla.innerText = `Tipo: ${e.tipo}`
-
-						const fuerzaPok1Batalla =
-							document.getElementById('fuerzaPok1Batalla')
-						fuerzaPok1Batalla.classList.remove('oculto')
-						fuerzaPok1Batalla.innerText = `Fuerza: ${e.fuerza}`
+						if (P1 === user_id) {
+							pokBat(e)
+							setInterval(() => {
+								pokBat2()
+							}, 1000)
+						}
 					})
 				})
 			}
@@ -144,10 +125,10 @@ function visualizar(data) {
 			function visualizarP2(copiaP2) {
 				copiaP2.forEach(e => {
 					let imagenes2
-					if (P2 === user_id) {
-						imagenes2 = document.querySelector('#imagesP1')
-					} else {
+					if (P1 === user_id) {
 						imagenes2 = document.querySelector('#imagesP2')
+					} else {
+						imagenes2 = document.querySelector('#imagesP1')
 					}
 					// let imagenes2 = document.querySelector('#imagesP2')
 					let divPokemon2 = document.createElement('div')
@@ -179,33 +160,179 @@ function visualizar(data) {
 							document.querySelector('#imgP2').classList.add('muerto')
 						}
 
-						const elegir = document.getElementById('span2')
-						elegir.classList.add('oculto')
-						const imgPok2Batalla = document.getElementById(`imgP2`)
-						imgPok2Batalla.setAttribute('src', e.img)
-						const nombrePok2Batalla =
-							document.getElementById('nombrePok2Batalla')
-						nombrePok2Batalla.classList.remove('oculto')
-						nombrePok2Batalla.innerText = e.nombre
-						const vidaPok2Batalla = document.getElementById('vidaPok2Batalla')
-						vidaPok2Batalla.classList.remove('oculto')
-						vidaPok2Batalla.innerText = `Vida: ${e.vidaActual}`
-
-						const tipoPok2Batalla = document.getElementById('tipoPok2Batalla')
-						tipoPok2Batalla.classList.remove('oculto')
-						tipoPok2Batalla.innerText = `Tipo: ${e.tipo}`
-
-						const fuerzaPok2Batalla =
-							document.getElementById('fuerzaPok2Batalla')
-						fuerzaPok2Batalla.classList.remove('oculto')
-						fuerzaPok2Batalla.innerText = `Fuerza: ${e.fuerza}`
+						if (P2 === user_id) {
+							pokBat(e)
+							setInterval(() => {
+								pokBat2()
+							}, 1000)
+						}
 					})
 				})
 			}
 
-			return { copiaP1, copiaP2 }
+			// return { copiaP1, copiaP2 }
 		})
 		.catch(err => console.error(err))
+}
+
+function pokBat(e) {
+	const elegir = document.getElementById('span1')
+	elegir.classList.add('oculto')
+	const imgPok1Batalla = document.getElementById(`imgP1`)
+	imgPok1Batalla.setAttribute('src', e.img)
+	const nombrePok1Batalla = document.getElementById('nombrePok1Batalla')
+	nombrePok1Batalla.classList.remove('oculto')
+	nombrePok1Batalla.innerText = e.nombre
+	const vidaPok1Batalla = document.getElementById('vidaPok1Batalla')
+	vidaPok1Batalla.classList.remove('oculto')
+	vidaPok1Batalla.innerText = `Vida: ${e.vidaActual}`
+
+	const tipoPok1Batalla = document.getElementById('tipoPok1Batalla')
+	tipoPok1Batalla.classList.remove('oculto')
+	tipoPok1Batalla.innerText = `Tipo: ${e.tipo}`
+
+	const fuerzaPok1Batalla = document.getElementById('fuerzaPok1Batalla')
+	fuerzaPok1Batalla.classList.remove('oculto')
+	fuerzaPok1Batalla.innerText = `Fuerza: ${e.fuerza}`
+
+	const botonConfirmar = document.getElementById('boton-confirmar')
+	botonConfirmar.classList.remove('oculto')
+
+	botonConfirmar.addEventListener('click', () => {
+		if (P1 === user_id) {
+			pokUso1(nombrePok1Batalla.textContent)
+		} else {
+			pokUso2(nombrePok1Batalla.textContent)
+		}
+	})
+}
+
+function pokBat2() {
+	const options2 = {
+		method: 'GET',
+		headers: {
+			'User-Agent': 'insomnia/10.1.1',
+			apikey:
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+			Authorization: `Bearer ${token}`,
+		},
+	}
+	let pok1
+	let pok2
+	fetch(
+		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?&select=P1EnUso%2CP2EnUso`,
+		options2,
+	)
+		.then(response => response.json())
+		.then(data4 => {
+			pok1 = data4[0].P1EnUso
+			pok2 = data4[0].P2EnUso
+
+			if (P1 === user_id) {
+				const options3 = {
+					method: 'GET',
+					headers: {
+						'User-Agent': 'insomnia/10.1.1',
+						apikey:
+							'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+						Authorization: `Bearer ${token}`,
+					},
+				}
+				fetch(
+					`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?&select=*`,
+					options3,
+				)
+					.then(response => response.json())
+					.then(data3 => {
+						// console.log(data3)
+						const batPok2 = data3.filter(e => e.nombre === pok2)
+						pokEnUso2(batPok2[0])
+					})
+					.catch(err => console.error(err))
+			} else {
+				const options3 = {
+					method: 'GET',
+					headers: {
+						'User-Agent': 'insomnia/10.1.1',
+						apikey:
+							'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+						Authorization: `Bearer ${token}`,
+					},
+				}
+				fetch(
+					`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?&select=*`,
+					options3,
+				)
+					.then(response => response.json())
+					.then(data3 => {
+						const batPok1 = data3.filter(e => e.nombre === pok1)
+						pokEnUso2(batPok1[0])
+					})
+					.catch(err => console.error(err))
+			}
+		})
+		.catch(err => console.error(err))
+}
+
+function pokEnUso2(e) {
+	const elegir = document.getElementById('span2')
+	elegir.classList.add('oculto')
+	const imgPok2Batalla = document.getElementById(`imgP2`)
+	imgPok2Batalla.setAttribute('src', e.img)
+	const nombrePok2Batalla = document.getElementById('nombrePok2Batalla')
+	nombrePok2Batalla.classList.remove('oculto')
+	nombrePok2Batalla.innerText = e.nombre
+	const vidaPok2Batalla = document.getElementById('vidaPok2Batalla')
+	vidaPok2Batalla.classList.remove('oculto')
+	vidaPok2Batalla.innerText = `Vida: ${e.vida}`
+
+	const tipoPok2Batalla = document.getElementById('tipoPok2Batalla')
+	tipoPok2Batalla.classList.remove('oculto')
+	tipoPok2Batalla.innerText = `Tipo: ${e.tipo}`
+
+	const fuerzaPok2Batalla = document.getElementById('fuerzaPok2Batalla')
+	fuerzaPok2Batalla.classList.remove('oculto')
+	fuerzaPok2Batalla.innerText = `Fuerza: ${e.fuerza}`
+}
+
+function pokUso1(nombre) {
+	const options = {
+		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json',
+			'User-Agent': 'insomnia/10.1.0',
+			apikey:
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+			Authorization: `Bearer ${token}`,
+			Prefer: 'return=minimal',
+		},
+		body: `{"P1EnUso":"${nombre}"}`,
+	}
+
+	fetch(
+		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?player1=eq.${user_id}`,
+		options,
+	).catch(err => console.log(err))
+}
+
+function pokUso2(nombre) {
+	const options = {
+		method: 'PATCH',
+		headers: {
+			'Content-Type': 'application/json',
+			'User-Agent': 'insomnia/10.1.0',
+			apikey:
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+			Authorization: `Bearer ${token}`,
+			Prefer: 'return=minimal',
+		},
+		body: `{"P2EnUso":"${nombre}"}`,
+	}
+
+	fetch(
+		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?player2=eq.${user_id}`,
+		options,
+	).catch(err => console.log(err))
 }
 
 let pokVivosP1 = 3
