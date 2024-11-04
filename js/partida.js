@@ -3,6 +3,10 @@ let datos
 const user_id = sessionStorage.getItem('user_id')
 const token = sessionStorage.getItem('access_token')
 
+setInterval(() => {
+	pokBat2()
+}, 1000)
+
 const options = {
 	method: 'GET',
 	headers: {
@@ -114,9 +118,9 @@ function visualizar(data) {
 
 						if (P1 === user_id) {
 							pokBat(e)
-							setInterval(() => {
-								pokBat2()
-							}, 1000)
+							// setInterval(() => {
+							// 	pokBat2()
+							// }, 1000)
 						}
 					})
 				})
@@ -162,9 +166,9 @@ function visualizar(data) {
 
 						if (P2 === user_id) {
 							pokBat(e)
-							setInterval(() => {
-								pokBat2()
-							}, 1000)
+							// setInterval(() => {
+							// 	pokBat2()
+							// }, 1000)
 						}
 					})
 				})
