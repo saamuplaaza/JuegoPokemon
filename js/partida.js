@@ -72,6 +72,7 @@ function visualizarP2(copiaP2) {
 				document.querySelector('.boton-luchar').setAttribute('disabled', '')
 				document.querySelector('#imgP2').classList.add('muerto')
 			}
+			pokBat(e)
 		})
 	})
 }
