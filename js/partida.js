@@ -140,9 +140,9 @@ async function visualizar(data) {
 }
 
 async function pokBat(e) {
-	console.log(e)
+	// console.log(e)
 	if (e !== undefined) {
-		console.log(e)
+		// console.log(e)
 		const elegir = document.getElementById('span1')
 		elegir.classList.add('oculto')
 		const imgPok1Batalla = document.getElementById(`imgP1`)
@@ -388,32 +388,87 @@ let pok1
 let pok2
 
 async function main() {
+	const options5 = {
+		method: 'GET',
+		headers: {
+			'User-Agent': 'insomnia/10.1.1',
+			apikey:
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+			Authorization: `Bearer ${token}`,
+		},
+	}
+	let response3 = await fetch(
+		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?&select=P1EnUso%2CP2EnUso`,
+		options5,
+	)
+	let data6 = await response3.json()
+	console.log(data6)
+	pok1 = data6[0].P1EnUso
+	pok2 = data6[0].P2EnUso
+	console.log(pok1)
+	console.log(pok2)
+
 	const options = {
 		method: 'GET',
 		headers: {
 			'User-Agent': 'insomnia/10.1.0',
 			apikey:
 				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+			Authorization: `Bearer ${token}`,
 		},
 	}
 	let response = await fetch(
-		'https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?select=*',
+		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?select=*`,
 		options,
 	)
 	let data = await response.json()
+
+	const options7 = {
+		method: 'GET',
+		headers: {
+			'User-Agent': 'insomnia/10.1.0',
+			apikey:
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+			Authorization: `Bearer ${token}`,
+		},
+	}
+	let response7 = await fetch(
+		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?nombre=eq.${pok1}&select=*`,
+		options7,
+	)
+	let data7 = await response7.json()
+
+	const options8 = {
+		method: 'GET',
+		headers: {
+			'User-Agent': 'insomnia/10.1.0',
+			apikey:
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+			Authorization: `Bearer ${token}`,
+		},
+	}
+	let response8 = await fetch(
+		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?nombre=eq.${pok2}&select=*`,
+		options8,
+	)
+	let data8 = await response8.json()
+
+	console.log(data7)
+	console.log(data8)
 	// .then(response => response.json())
 	// .then(data => {
-	console.log(data)
 	let datos = await visualizar(data)
 	console.log(datos)
 	// let pokBatSeleccionado = await pokBatElegido(datos)
 	// console.log(pokBatSeleccionado)
 
-	if (P1 === user_id) {
-		// let nose = await pokBat(datos)
+	if (P1 === user_id && pok1) {
+		console.log(pok1)
+		pokBat(pok1)
 		// console.log(nose)
-	} else if (P2 === user_id) {
-		// let nose = await pokBat(datos)
+	} else if (P2 === user_id && pok2) {
+		console.log(pok2)
+		pokBat(pok2)
 		// console.log(nose)
 	}
 
