@@ -1,5 +1,7 @@
 const user_id = sessionStorage.getItem('user_id')
 const token = sessionStorage.getItem('access_token')
+let P1
+let P2
 
 function visualizarP1(copiaP1) {
 	copiaP1.forEach(e => {
@@ -34,7 +36,9 @@ function visualizarP1(copiaP1) {
 				document.querySelector('.boton-luchar').setAttribute('disabled', '')
 				document.querySelector('#imgP1').classList.add('muerto')
 			}
-			pokBat(e)
+			if (P1 === user_id) {
+				pokBat(e)
+			}
 		})
 	})
 }
@@ -72,7 +76,10 @@ function visualizarP2(copiaP2) {
 				document.querySelector('.boton-luchar').setAttribute('disabled', '')
 				document.querySelector('#imgP2').classList.add('muerto')
 			}
-			pokBat(e)
+			if (P2 === user_id) {
+				pokBat(e)
+			}
+			// pokBat(e)
 		})
 	})
 }
@@ -87,6 +94,7 @@ async function visualizar(data) {
 			Authorization: `Bearer ${token}`,
 		},
 	}
+
 	let pok1_1 = ''
 	let pok1_2 = ''
 	let pok1_3 = ''
@@ -125,12 +133,12 @@ async function visualizar(data) {
 		visualizarP1(copiaP1)
 		visualizarP2(copiaP2)
 	} else {
-		visualizarP2(copiaP2)
 		visualizarP1(copiaP1)
+		visualizarP2(copiaP2)
 	}
 
 	setInterval(() => {
-		pokBat2()
+		pokBat2(copiaP1, copiaP2)
 	}, 1000)
 
 	// pokBatElegido()
@@ -167,14 +175,14 @@ async function pokBat(e) {
 
 		botonConfirmar.addEventListener('click', () => {
 			if (P1 === user_id) {
-				let algo = pokUso1(nombrePok1Batalla.textContent)
+				pokUso1(nombrePok1Batalla.textContent)
 				console.log(algo)
 			} else {
 				pokUso2(nombrePok1Batalla.textContent)
 			}
 		})
-		console.log(nombrePok1Batalla.innerText)
-		return nombrePok1Batalla.innerText
+		// console.log(nombrePok1Batalla.innerText)
+		// return nombrePok1Batalla.innerText
 	}
 	// if (P1 === user_id) {
 	// let pokBatSeleccionado = await pokBatElegido(datos)
@@ -185,7 +193,7 @@ async function pokBat(e) {
 	// }
 }
 
-async function pokBat2() {
+async function pokBat2(copiaP1, copiaP2) {
 	const options2 = {
 		method: 'GET',
 		headers: {
@@ -206,46 +214,45 @@ async function pokBat2() {
 	pok2 = data4[0].P2EnUso
 
 	if (P1 === user_id) {
-		const options3 = {
-			method: 'GET',
-			headers: {
-				'User-Agent': 'insomnia/10.1.1',
-				apikey:
-					'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
-				Authorization: `Bearer ${token}`,
-			},
-		}
-		let response = await fetch(
-			`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?&select=*`,
-			options3,
-		)
-		let data3 = await response.json()
+		// const options3 = {
+		// 	method: 'GET',
+		// 	headers: {
+		// 		'User-Agent': 'insomnia/10.1.1',
+		// 		apikey:
+		// 			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+		// 		Authorization: `Bearer ${token}`,
+		// 	},
+		// }
+		// let response = await fetch(
+		// 	`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?&select=*`,
+		// 	options3,
+		// )
+		// let data3 = await response.json()
 		// .then(response => response.json())
 		// .then(data3 => {
 		// 	// console.log(pok2)
-		const batPok2 = data3.filter(e => e.nombre === pok2)
-		// console.log(batPok2)
+		const batPok2 = copiaP2.filter(e => e.nombre === pok2)
 		pokEnUso2(batPok2[0])
 		// })
 		// .catch(err => console.error(err))
 	} else {
-		const options3 = {
-			method: 'GET',
-			headers: {
-				'User-Agent': 'insomnia/10.1.1',
-				apikey:
-					'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
-				Authorization: `Bearer ${token}`,
-			},
-		}
-		let response = await fetch(
-			`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?&select=*`,
-			options3,
-		)
-		let data3 = await response.json()
+		// const options3 = {
+		// 	method: 'GET',
+		// 	headers: {
+		// 		'User-Agent': 'insomnia/10.1.1',
+		// 		apikey:
+		// 			'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+		// 		Authorization: `Bearer ${token}`,
+		// 	},
+		// }
+		// let response = await fetch(
+		// 	`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?&select=*`,
+		// 	options3,
+		// )
+		// let data3 = await response.json()
 		// .then(response => response.json())
 		// .then(data3 => {
-		const batPok1 = data3.filter(e => e.nombre === pok1)
+		const batPok1 = copiaP1.filter(e => e.nombre === pok1)
 		pokEnUso2(batPok1[0])
 		// })
 		// .catch(err => console.error(err))
@@ -278,67 +285,6 @@ function pokEnUso2(e) {
 		fuerzaPok2Batalla.classList.remove('oculto')
 		fuerzaPok2Batalla.innerText = `Fuerza: ${e.fuerza}`
 	}
-}
-
-async function pokBatElegido(datos) {
-	// let pokBatSeleccionado2
-	const options2 = {
-		method: 'GET',
-		headers: {
-			'User-Agent': 'insomnia/10.1.1',
-			apikey:
-				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
-			Authorization: `Bearer ${token}`,
-		},
-	}
-	let response = await fetch(
-		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?&select=P1EnUso%2CP2EnUso`,
-		options2,
-	)
-	let data4 = await response.json()
-	// .then(response => response.json())
-	// .then(data4 => {
-	pok1 = data4[0].P1EnUso
-	pok2 = data4[0].P2EnUso
-
-	const options5 = {
-		method: 'GET',
-		headers: {
-			'User-Agent': 'insomnia/10.1.1',
-			apikey:
-				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
-			Authorization: `Bearer ${token}`,
-		},
-	}
-	let response2 = await fetch(
-		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?&select=*`,
-		options5,
-	)
-	let data5 = await response2.json()
-	// .then(response => response.json())
-	// .then(data5 => {
-	const batPok1 = data5.filter(e => e.nombre === pok1)
-	const batPok2 = data5.filter(e => e.nombre === pok2)
-	if (P1 === user_id) {
-		if (batPok1.length > 0) {
-			console.log('antes')
-			let pokBatSeleccionado2 = await pokBat(batPok1)
-			console.log(pokBatSeleccionado2)
-			return pokBatSeleccionado2
-		}
-	} else if (P2 === user_id) {
-		if (batPok2.length > 0) {
-			let pokBatSeleccionado2 = await pokBat(batPok2)
-			console.log(pokBatSeleccionado2)
-			// return pokBatSeleccionado2
-			return pokBatSeleccionado2
-		}
-	}
-	// console.log(pokBatSeleccionado2)
-	// })
-	// .catch(err => console.error(err))
-	// })
-	// .catch(err => console.error(err))
 }
 
 async function pokUso1(nombre) {
@@ -436,7 +382,7 @@ async function main() {
 		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?nombre=eq.${pok1}&select=*`,
 		options7,
 	)
-	let data7 = await response7.json()
+	let [data7] = await response7.json()
 
 	const options8 = {
 		method: 'GET',
@@ -451,68 +397,73 @@ async function main() {
 		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?nombre=eq.${pok2}&select=*`,
 		options8,
 	)
-	let data8 = await response8.json()
+	let [data8] = await response8.json()
 
-	console.log(data7)
-	console.log(data8)
+	// console.log(data7)
+	// console.log(data8)
 	// .then(response => response.json())
 	// .then(data => {
-	let datos = await visualizar(data)
-	console.log(datos)
-	// let pokBatSeleccionado = await pokBatElegido(datos)
-	// console.log(pokBatSeleccionado)
+	let [datosP1, datosP2] = await visualizar(data)
+	let [pokemonBatallaP1] = datosP1.filter(e => e.nombre === data7.nombre)
+	let [pokemonBatallaP2] = datosP2.filter(e => e.nombre === data8.nombre)
 
 	if (P1 === user_id && pok1) {
-		console.log(pok1)
-		pokBat(pok1)
-		// console.log(nose)
+		pokBat(pokemonBatallaP1)
 	} else if (P2 === user_id && pok2) {
-		console.log(pok2)
-		pokBat(pok2)
+		pokBat(pokemonBatallaP2)
 		// console.log(nose)
 	}
 
 	const botonLucha = document.querySelector('.boton-luchar')
-	botonLucha.addEventListener('click', () => ataque(datos))
-	// })
-	// .catch(err => console.error(err))
+	botonLucha.addEventListener('click', () =>
+		ataque(pokemonBatallaP1, pokemonBatallaP2),
+	)
 }
-
-main()
 
 let pokVivosP1 = 3
 let pokVivosP2 = 3
 
 let turno = 1
 
-function ataque(datos) {
-	let pokBatallaP1 = datos.copiaP1.filter(e => e.enUso === true)
-	let pok1Batalla = pokBatallaP1[0]
-	let pokBatallaP2 = datos.copiaP2.filter(e => e.enUso === true)
-	let pok2Batalla = pokBatallaP2[0]
+function ataque(pokemonBatallaP1, pokemonBatallaP2) {
+	console.log(pokemonBatallaP1)
+	console.log(pokemonBatallaP2)
+	// let pokBatallaP1 = datos.copiaP1.filter(e => e.enUso === true)
+	// let pok1Batalla = pokBatallaP1[0]
+	// let pokBatallaP2 = datos.copiaP2.filter(e => e.enUso === true)
+	// let pok2Batalla = pokBatallaP2[0]
 
-	if (pok1Batalla.vidaActual === 0 || pok2Batalla.vidaActual === 0) {
+	if (pokemonBatallaP1.vidaActual === 0 || pokemonBatallaP2.vidaActual === 0) {
 		document.querySelector('.boton-luchar').setAttribute('disabled', '')
 		return
 	}
 
-	// Ataque del Pokémon 1
+	// Ataque del Player 1
 	if (turno % 2 !== 0) {
-		let ataque1 = Math.ceil(Math.random() * pok1Batalla.fuerza)
-		pok2Batalla.vidaActual -= ataque1
+		let ataque1 = Math.ceil(Math.random() * pokemonBatallaP1.fuerza)
+		pokemonBatallaP2.vidaActual -= ataque1
 
-		if (pok2Batalla.vidaActual <= 0) {
-			pok2Batalla.vidaActual = 0
+		if (pokemonBatallaP2.vidaActual <= 0) {
+			pokemonBatallaP2.vidaActual = 0
 			document.querySelector('.boton-luchar').setAttribute('disabled', '')
+			let numero
+			let resultado
+			if (P1 === user_id) {
+				numero = 1
+				resultado = '¡Victoria!'
+			} else if (P2 === user_id) {
+				numero = 2
+				resultado = 'Derrota'
+			}
 			document
-				.querySelector(`#P2-${pok2Batalla.nombre}`)
+				.querySelector(`#P${numero}-${pokemonBatallaP2.nombre}`)
 				.classList.add('muerto')
-			document.querySelector(`#imgP2`).classList.add('muerto')
+			document.querySelector(`#imgP${numero}`).classList.add('muerto')
 			pokVivosP2 -= 1
 			if (pokVivosP2 === 0) {
 				let ganador = document.createElement('p')
 				ganador.className = 'ganador'
-				ganador.innerHTML = '¡Player 1 win!'
+				ganador.innerHTML = resultado
 				document.body.append(ganador)
 				actualizarVida(datos.copiaP1)
 			}
@@ -520,30 +471,31 @@ function ataque(datos) {
 
 		// Actualizar el texto de vida del Pokémon 2
 		let vidaPok2Batalla = document.getElementById('vidaPok2Batalla')
-		vidaPok2Batalla.innerText = `Vida: ${pok2Batalla.vidaActual}`
+		vidaPok2Batalla.innerText = `Vida: ${pokemonBatallaP2.vidaActual}`
 
-		let vidaPok2 = document.querySelector(`#vidaP2-${pok2Batalla.nombre}`)
-		vidaPok2.innerText = pok2Batalla.vidaActual + '/' + pok2Batalla.vida
+		let vidaPok2 = document.querySelector(`#vidaP2-${pokemonBatallaP2.nombre}`)
+		vidaPok2.innerText =
+			pokemonBatallaP2.vidaActual + '/' + pokemonBatallaP2.vida
 
 		const ataquePok1Batalla = document.getElementById('eventos-batalla')
-		ataquePok1Batalla.innerHTML += `Ataca ${pok1Batalla.nombre} con daño ${ataque1} y deja a ${pok2Batalla.nombre} con ${pok2Batalla.vidaActual} de vida.<br>`
+		ataquePok1Batalla.innerHTML += `Ataca ${pokemonBatallaP1.nombre} con daño ${ataque1} y deja a ${pokemonBatallaP2.nombre} con ${pokemonBatallaP2.vidaActual} de vida.<br>`
 		ataquePok1Batalla.scrollTop = ataquePok1Batalla.scrollHeight
 
-		if (pok2Batalla.vidaActual === 0) {
+		if (pokemonBatallaP2.vidaActual === 0) {
 			document.querySelector('.boton-luchar').setAttribute('disabled', '')
 			turno++
 			return
 		}
 	} else if (turno % 2 === 0) {
 		// Ataque del Pokémon 2
-		let ataque2 = Math.ceil(Math.random() * pok2Batalla.fuerza)
-		pok1Batalla.vidaActual -= ataque2
+		let ataque2 = Math.ceil(Math.random() * pokemonBatallaP2.fuerza)
+		pokemonBatallaP1.vidaActual -= ataque2
 
-		if (pok1Batalla.vidaActual <= 0) {
-			pok1Batalla.vidaActual = 0
+		if (pokemonBatallaP1.vidaActual <= 0) {
+			pokemonBatallaP1.vidaActual = 0
 			document.querySelector('.boton-luchar').setAttribute('disabled', '')
 			document
-				.querySelector(`#P1-${pok1Batalla.nombre}`)
+				.querySelector(`#P1-${pokemonBatallaP1.nombre}`)
 				.classList.add('muerto')
 			document.querySelector(`#imgP1`).classList.add('muerto')
 			pokVivosP1 -= 1
@@ -557,16 +509,17 @@ function ataque(datos) {
 
 		// Actualizar el texto de vida del Pokémon 1
 		let vidaPok1Batalla = document.getElementById('vidaPok1Batalla')
-		vidaPok1Batalla.innerText = `Vida: ${pok1Batalla.vidaActual}`
+		vidaPok1Batalla.innerText = `Vida: ${pokemonBatallaP1.vidaActual}`
 
-		let vidaPok1 = document.querySelector(`#vidaP1-${pok1Batalla.nombre}`)
-		vidaPok1.innerText = pok1Batalla.vidaActual + '/' + pok1Batalla.vida
+		let vidaPok1 = document.querySelector(`#vidaP1-${pokemonBatallaP1.nombre}`)
+		vidaPok1.innerText =
+			pokemonBatallaP1.vidaActual + '/' + pokemonBatallaP1.vida
 
 		const ataquePok2Batalla = document.getElementById('eventos-batalla')
-		ataquePok2Batalla.innerHTML += `Ataca ${pok2Batalla.nombre} con daño ${ataque2} y deja a ${pok1Batalla.nombre} con ${pok1Batalla.vidaActual} de vida.<br>`
+		ataquePok2Batalla.innerHTML += `Ataca ${pok2Batalla.nombre} con daño ${ataque2} y deja a ${pokemonBatallaP1.nombre} con ${pokemonBatallaP1.vidaActual} de vida.<br>`
 		ataquePok2Batalla.scrollTop = ataquePok2Batalla.scrollHeight
 
-		if (pok1Batalla.vidaActual === 0) {
+		if (pokemonBatallaP1.vidaActual === 0) {
 			document.querySelector('.boton-luchar').setAttribute('disabled', '')
 			turno++
 			return
@@ -607,3 +560,65 @@ const reiniciar = () => {
 	// eventos.innerText = ''
 	location.reload()
 }
+
+main()
+
+// async function pokBatElegido(datos) {
+// 	// let pokBatSeleccionado2
+// 	const options2 = {
+// 		method: 'GET',
+// 		headers: {
+// 			'User-Agent': 'insomnia/10.1.1',
+// 			apikey:
+// 				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+// 			Authorization: `Bearer ${token}`,
+// 		},
+// 	}
+// 	let response = await fetch(
+// 		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?&select=P1EnUso%2CP2EnUso`,
+// 		options2,
+// 	)
+// 	let data4 = await response.json()
+// 	// .then(response => response.json())
+// 	// .then(data4 => {
+// 	pok1 = data4[0].P1EnUso
+// 	pok2 = data4[0].P2EnUso
+
+// 	const options5 = {
+// 		method: 'GET',
+// 		headers: {
+// 			'User-Agent': 'insomnia/10.1.1',
+// 			apikey:
+// 				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+// 			Authorization: `Bearer ${token}`,
+// 		},
+// 	}
+// 	let response2 = await fetch(
+// 		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/pokemon?&select=*`,
+// 		options5,
+// 	)
+// 	let data5 = await response2.json()
+// 	// .then(response => response.json())
+// 	// .then(data5 => {
+// 	const batPok1 = data5.filter(e => e.nombre === pok1)
+// 	const batPok2 = data5.filter(e => e.nombre === pok2)
+// 	if (P1 === user_id) {
+// 		if (batPok1.length > 0) {
+// 			let pokBatSeleccionado2 = await pokBat(batPok1)
+// 			// console.log(pokBatSeleccionado2)
+// 			return pokBatSeleccionado2
+// 		}
+// 	} else if (P2 === user_id) {
+// 		if (batPok2.length > 0) {
+// 			let pokBatSeleccionado2 = await pokBat(batPok2)
+// 			console.log(pokBatSeleccionado2)
+// 			// return pokBatSeleccionado2
+// 			return pokBatSeleccionado2
+// 		}
+// 	}
+// 	// console.log(pokBatSeleccionado2)
+// 	// })
+// 	// .catch(err => console.error(err))
+// 	// })
+// 	// .catch(err => console.error(err))
+// }
