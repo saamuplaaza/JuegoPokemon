@@ -10,7 +10,7 @@ body{
     align-items: center;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: linear-gradient(rgba(255, 255, 255, 0.6),rgba(255, 255, 255, 0.6)), url("../images/puzzle-ravensburger-5000-pieces-pokemon-5000.jpg");
+    background-image: linear-gradient(rgba(255, 255, 255, 0.76),rgba(255, 255, 255, 0.76)), url("../images/puzzle-ravensburger-5000-pieces-pokemon-5000.jpg");
     overflow-y: hidden;
 }
 
@@ -75,6 +75,7 @@ img{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 33%;
 }
 
 #eventos-batalla{
@@ -86,7 +87,7 @@ img{
     max-height: 300px;
     overflow-y: auto;
     padding: 3px 10px;
-    background-color: rgba(250, 250, 250, 0.8);
+    background-color: rgba(250, 250, 250, 0.87);
 }
 
 .eleccion-batalla{
@@ -181,4 +182,22 @@ button:disabled{
     font-family: Verdana, Geneva, Tahoma, serif;
     font-weight: bold;
     font-size: 2rem;
+}
+
+#cargando{
+    border-top: 3px dotted black;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    transform: rotate(360deg);
+    animation: girar 2s linear infinite;
+}
+
+@keyframes girar {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }

@@ -42,7 +42,7 @@ boton.addEventListener('click', () => {
 					'https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match',
 					options3,
 				)
-					.then(setInterval(() => pasarPartida(newRow), 5000))
+					.then(setInterval(() => pasarPartida(newRow), 3000))
 					.catch(err => console.error(err))
 			} else {
 				const options2 = {
@@ -63,7 +63,7 @@ boton.addEventListener('click', () => {
 					options2,
 				)
 					// .then(response => response.json)
-					.then(setInterval(() => pasarPartida(newRow), 5000))
+					.then(setInterval(() => pasarPartida(newRow), 1000))
 					// .then((window.location.href = './pokemons.html'))
 					.catch(err => console.log(err))
 			}
