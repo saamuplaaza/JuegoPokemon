@@ -53,8 +53,7 @@ fetch(
 						confirmarDiv.classList.remove('confirmar')
 						confirmarDiv.classList.add('seleccionado')
 
-						poksPlayer.push(e.nombre)
-						console.log(poksPlayer)
+						poksPlayer.push({ ...e, vidaActual: e.vida })
 						if (poksPlayer.length === 4) {
 							const options = {
 								method: 'GET',
@@ -87,7 +86,14 @@ fetch(
 												Authorization: `Bearer ${token}`,
 												Prefer: 'return=minimal',
 											},
-											body: `{"poks2":"{${poksPlayer}}"}`,
+											body: JSON.stringify({
+												poks2: {
+													id: poksPlayer[0],
+													pok1: poksPlayer[1],
+													pok2: poksPlayer[2],
+													pok3: poksPlayer[3],
+												},
+											}),
 										}
 
 										fetch(
@@ -112,16 +118,20 @@ fetch(
 												Authorization: `Bearer ${token}`,
 												Prefer: 'return=minimal',
 											},
-											body: `{"poks1":"{${poksPlayer}}"}`,
+											body: JSON.stringify({
+												poks1: {
+													id: poksPlayer[0],
+													pok1: poksPlayer[1],
+													pok2: poksPlayer[2],
+													pok3: poksPlayer[3],
+												},
+											}),
 										}
-
 										fetch(
 											`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?player1=eq.${user_id}`,
 											options2,
 										)
-											.then(data => {
-												console.log(data)
-												console.log('Aqui')
+											.then(() => {
 												setInterval(() => {
 													pasarPartida()
 												}, 3000)
@@ -162,8 +172,6 @@ const pasarPartida = () => {
 	)
 		.then(response => response.json())
 		.then(data => {
-			console.log(data)
-			console.log(data[0])
 			data[0].poks1 !== null && data[0].poks2 !== null
 				? (window.location.href = './partida.html')
 				: ''

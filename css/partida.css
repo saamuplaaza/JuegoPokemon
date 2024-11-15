@@ -29,6 +29,7 @@ h2{
     justify-content: space-around;
     width: 100%;
 }
+
 .player{
     display: flex;
     flex-direction: column;
@@ -42,8 +43,14 @@ h2{
 .images{
     display: flex;
 }
-.images > div{
-    margin: 0 5px 0 5px;
+
+.images>div{
+    margin-right: 50px;
+}
+
+.P-pokemons{
+    cursor: pointer;
+    transition: transform .2s ease-in-out;
 }
 
 .P-pokemons:hover{
@@ -124,7 +131,7 @@ img{
     cursor: not-allowed;
 }
 
-.ganador{
+.resultado{
     display: flex;
     position: absolute;
     top: 25%;
@@ -136,12 +143,19 @@ img{
     font-size: 5rem;
     border: 1px solid rgb(17, 17, 17);
     border-radius: 20px;
-    box-shadow: 10px 5px 5px black;
+    box-shadow: 7px 5px 10px black;
     text-shadow: 3px 3px 3px black;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/gifWin.gif);
     background-repeat: no-repeat;
     background-size: cover;
     text-align: center;
+}
+.ganador{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/win.gif);
+}
+
+.perdedor{
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/defeat.gif);
+
 }
 
 .oculto{
