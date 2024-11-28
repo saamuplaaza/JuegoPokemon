@@ -707,12 +707,6 @@ const actualizarVida = datos => {
 	})
 }
 
-const reiniciar = () => {
-	// const eventos = document.getElementById('eventos-batalla')
-	// eventos.innerText = ''
-	location.reload()
-}
-
 main()
 
 document.addEventListener('click', () => {
