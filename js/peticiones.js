@@ -227,3 +227,23 @@ function restarPokVivos2(pokVivosP2) {
 		options,
 	).catch(err => console.error(err))
 }
+
+async function borrarPartida(){
+	const options = {
+		method: 'DELETE',
+		headers: {
+			'Content-Type': 'application/json',
+			'User-Agent': 'insomnia/10.1.0',
+			apikey:
+				'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJqb2xweGJrb3B3bG16enRwbWdiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkwNzEwMDksImV4cCI6MjA0NDY0NzAwOX0.IeR7NSHpXXJwTa0D84ov2dQ8BJgHAjxwyQPLtj4LfKg',
+			Authorization: `Bearer ${token}`,
+			Prefer: 'return=minimal',
+		},
+		
+	}
+
+	fetch(
+		`https://bjolpxbkopwlmzztpmgb.supabase.co/rest/v1/match?player${numero}=eq.${user_id}`,
+		options,
+	).catch(err => console.error(err))
+}

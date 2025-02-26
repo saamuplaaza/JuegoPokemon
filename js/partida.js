@@ -341,6 +341,11 @@ async function main() {
 				document.body.append(resultado)
 				clearInterval(intervalo)
 			}
+			try{
+				borrarPartida()
+			}catch{
+				return
+			}
 		} else if (pokVivosP1 === 0) {
 			if (P1 === user_id) {
 				let resultado = document.createElement('p')
@@ -354,6 +359,11 @@ async function main() {
 				resultado.innerHTML = '¡Victoria!'
 				document.body.append(resultado)
 				clearInterval(intervalo)
+			}
+			try{
+				borrarPartida()
+			}catch{
+				return
 			}
 		}
 
