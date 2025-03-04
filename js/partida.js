@@ -345,6 +345,9 @@ async function main() {
 				}
 				try{
 					borrarPartida()
+					setInterval(() => {
+						window.location.href = './menu.html'
+					}, 5000);
 				}catch{
 					return
 				}
