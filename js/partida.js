@@ -294,12 +294,13 @@ async function main() {
 	// en uso, por si han cambiado
 	setInterval(async () => {
 		poksEnUso = await funcPoksEnUso()
-		pok1 = poksEnUso.P1EnUso
-		pok2 = poksEnUso.P2EnUso
+		if (poksEnUso){
+			pok1 = poksEnUso.P1EnUso
+			pok2 = poksEnUso.P2EnUso
 
-		pokP1EnUso = dataPoks.poks1.filter(e => e.nombre === pok1)
-
-		pokP2EnUso = dataPoks.poks2.filter(e => e.nombre === pok2)
+			pokP1EnUso = dataPoks.poks1.filter(e => e.nombre === pok1)
+			pokP2EnUso = dataPoks.poks2.filter(e => e.nombre === pok2)
+		}
 	}, 1000)
 
 	// Visualizo los pokemons de cada jugador. Cada jugador tiene a sus pokemons a la izquierda y
