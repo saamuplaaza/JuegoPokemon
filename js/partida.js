@@ -323,49 +323,52 @@ async function main() {
 	// pintará el pokemon correspondiente
 	const intervalo = setInterval(async () => {
 		let poksVivos = await funcPoksVivos()
-		pokVivosP1 = poksVivos.poksVivosP1
-		pokVivosP2 = poksVivos.poksVivosP2
-		console.log(pokVivosP2)
-		console.log(poksVivos)
-		if (pokVivosP2 === 0) {
-			if (P1 === user_id) {
-				let resultado = document.createElement('p')
-				resultado.className = 'resultado ganador'
-				resultado.innerHTML = '¡Victoria!'
-				document.body.append(resultado)
-				clearInterval(intervalo)
-			} else if (P2 === user_id) {
-				let resultado = document.createElement('p')
-				resultado.className = 'resultado perdedor'
-				resultado.innerHTML = 'Derrota'
-				document.body.append(resultado)
-				clearInterval(intervalo)
-			}
-			try{
-				borrarPartida()
-			}catch{
-				return
-			}
-		} else if (pokVivosP1 === 0) {
-			if (P1 === user_id) {
-				let resultado = document.createElement('p')
-				resultado.className = 'resultado perdedor'
-				resultado.innerHTML = 'Derrota'
-				document.body.append(resultado)
-				clearInterval(intervalo)
-			} else if (P2 === user_id) {
-				let resultado = document.createElement('p')
-				resultado.className = 'resultado ganador'
-				resultado.innerHTML = '¡Victoria!'
-				document.body.append(resultado)
-				clearInterval(intervalo)
-			}
-			try{
-				borrarPartida()
-			}catch{
-				return
+		if (poksVivos){
+			pokVivosP1 = poksVivos.poksVivosP1
+			pokVivosP2 = poksVivos.poksVivosP2
+			console.log(pokVivosP2)
+			console.log(poksVivos)
+			if (pokVivosP2 === 0) {
+				if (P1 === user_id) {
+					let resultado = document.createElement('p')
+					resultado.className = 'resultado ganador'
+					resultado.innerHTML = '¡Victoria!'
+					document.body.append(resultado)
+					clearInterval(intervalo)
+				} else if (P2 === user_id) {
+					let resultado = document.createElement('p')
+					resultado.className = 'resultado perdedor'
+					resultado.innerHTML = 'Derrota'
+					document.body.append(resultado)
+					clearInterval(intervalo)
+				}
+				try{
+					borrarPartida()
+				}catch{
+					return
+				}
+			} else if (pokVivosP1 === 0) {
+				if (P1 === user_id) {
+					let resultado = document.createElement('p')
+					resultado.className = 'resultado perdedor'
+					resultado.innerHTML = 'Derrota'
+					document.body.append(resultado)
+					clearInterval(intervalo)
+				} else if (P2 === user_id) {
+					let resultado = document.createElement('p')
+					resultado.className = 'resultado ganador'
+					resultado.innerHTML = '¡Victoria!'
+					document.body.append(resultado)
+					clearInterval(intervalo)
+				}
+				try{
+					borrarPartida()
+				}catch{
+					return
+				}
 			}
 		}
+		
 
 		if (pokP1EnUso[0] !== undefined) {
 			pokemonBatallaP1 = datosP1.filter(e => e.nombre === pokP1EnUso[0].nombre)
